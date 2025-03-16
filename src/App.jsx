@@ -1,34 +1,26 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import {ThemeContextProvider} from './context/themeOrigin'
+import {Toggler} from './components/toggler'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [themeMode, setThemeMode]=useState('light');
 
+  const darkTheme= () => {
+    setThemeMode('dark');
+  }
+
+  const lightTheme= () => {
+    setThemeMode('light')
+  }
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    <ThemeContextProvider value={{themeMode, lightTheme, darkTheme}}>
+    <div className={`${themeMode === 'dark' ? 'bg-black' : 'bg-white'} h-screen`}>
+    <div className={`${themeMode === 'dark' ? 'bg-white' : 'bg-black'} fixed top-0 h-80 w-160`}></div>
+    <div className="w-full max-w-sm mx-auto flex justify-end mb-4"><Toggler/></div>
+    <div className={`${themeMode === 'dark' ? 'bg-white' : 'bg-black'} fixed bottom-0
+    right-0 h-71 w-160`}></div>
+    </div>
+    </ThemeContextProvider>
   )
 }
 

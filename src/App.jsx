@@ -1,9 +1,14 @@
-import { useState } from 'react'
+import { useState,useEffect } from 'react'
 import {ThemeContextProvider} from './context/themeOrigin'
 import {Toggler} from './components/toggler'
 
 function App() {
-  const [themeMode, setThemeMode]=useState('light');
+  const [themeMode, setThemeMode]=useState(() => {
+    return JSON.parse(localStorage.getItem('themeMode')) || 'light';})
+
+  useEffect(() => {
+    localStorage.setItem('themeMode', JSON.stringify(themeMode))
+  },[themeMode])
 
   const darkTheme= () => {
     setThemeMode('dark');
